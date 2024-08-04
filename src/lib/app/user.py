@@ -1,5 +1,4 @@
 from src.db_models import Book, User
-from src.models import BookModel
 from flask_app import db
 
 from src.views import json_response

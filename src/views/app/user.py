@@ -1,7 +1,5 @@
 from flask_restx import fields
 
-from src.db_models import Book, User
-from src.models import BookModel
 from src.views.blueprint import api, app_ns, auth_ns
 from src.views.resources import ResourceApp
 from src.views import json_response
@@ -13,10 +11,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from argon2 import PasswordHasher
 ph = PasswordHasher()
 from functools import wraps
-import uuid
-import jwt
-import datetime
-from werkzeug.exceptions import NotFound, Forbidden
 
 from flask_app import app, db
 from src.views.app import auth
