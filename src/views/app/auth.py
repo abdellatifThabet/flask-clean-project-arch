@@ -18,7 +18,9 @@ import datetime
 from werkzeug.exceptions import NotFound, Forbidden
 
 from flask_app import app, db
-
+from flask import url_for, session, redirect
+from authlib.integrations.flask_client import OAuth
+import os
 
 
 user_post_model = auth_ns.model('user_post_model', {
@@ -87,3 +89,47 @@ class UserRefresh(ResourceApp):
                 "access_token": new_acces_token,
                 "refresh_token": new_refresh_token
             }})
+        
+        
+        
+############
+oauth = OAuth(app)
+google = oauth.register(
+    name='google',
+    client_id=os.getenv("GOOGLE_CLIENT_ID", ""),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET", ""),
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_params=None,
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    authorize_params=None,
+    api_base_url='https://www.googleapis.com/oauth2/v1/',
+    userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
+    client_kwargs={'scope': 'email profile'},
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+)
+
+
+
+@app.route('/google_auth')
+def google_login():
+    google = oauth.create_client('google')
+    redirect_uri = url_for('authorize', _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+@app.route('/authorize')
+def authorize():
+    google = oauth.create_client('google')
+    token = google.authorize_access_token()
+    resp = google.get('userinfo')
+    userinfo = resp.json()
+    session["email"] = userinfo["email"]
+    session["name"] = userinfo["name"]
+    # do something with the token and profile
+    return redirect('/')
+
+@app.route('/')
+def hello():
+    email = dict(session).get("email", None)
+    name = dict(session).get("name")
+    session.pop("email")
+    return f"hello world {email} .having name. {name}"
