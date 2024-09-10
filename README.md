@@ -1,6 +1,6 @@
 # Rest api template
 
-This service was designed to be a model for rest api micro-service with relational db.
+This is a flask project for REST api's built on top of a clean architecture aims to cover the most used libraries to be clean, easy to use, scalable.
 
 This service was implemented with the help of [flask](https://flask.palletsprojects.com/en/2.0.x/) framework and its
 ecosystem:
@@ -14,14 +14,20 @@ ecosystem:
 ### Run the server
 
 To run flask server you need docker and docker-compose in your machine, after running the below command try to access to
-swagger UI via http://localhost:5000
+swagger UI via http://0.0.0.0/api/
+
+Nginx is used in this project alongside with uwsgi server in order to handle multiple user requests in case this project is deployed in production.
 
 ```shell
 make run
 ```
 If you run the app the very first time you need to generate a db migration file
+using : make db-init
 
- 
+
+```shell
+make stop
+```
 Note: it's recommended to stop all the running containers, sometime other services may take the same port number.
 
 ### Generate db migration file
@@ -35,6 +41,7 @@ make db-migrate
 
 [alembic](https://alembic.sqlalchemy.org/en/latest/) together
 with [flask-migrate](https://flask-migrate.readthedocs.io/en/latest/)
-will auto-generate a migration file with the db changes, you will find it under `migrations/versions` prefixed with the
-datetime of the generation.
+will auto-generate a migration file with the db changes, you will find it under `migrations/versions` prefixed with the datetime of the generation.
+
+Note that each time you run the project using `make run` an upgrade of the migrations will be applied in order to update the db schema.
 
