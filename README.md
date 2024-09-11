@@ -10,6 +10,7 @@ ecosystem:
 * [sqlalchemy](https://www.sqlalchemy.org/) ORM for the db connect, and it assists to compose sql queries.
 * [flask-sqlalchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) to connect flask app with
 * [flask-migrate](https://flask-migrate.readthedocs.io/en/latest/) to auto-generate db migration file.
+* [marshmallow] (https://marshmallow.readthedocs.io/en/stable/) for inputs validators and serializers
 
 ### Run the server
 

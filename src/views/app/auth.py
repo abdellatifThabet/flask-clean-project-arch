@@ -34,9 +34,6 @@ login_post_model = auth_ns.model('login_post_model', {
     'passwd': fields.String(required=True, description='password of the facebook account', format='password'),
 })
 
-# refresh_token_model = auth_ns.model('refresh_token_model', {
-#     'token': fields.String(required=True, description='name of the user')
-# })
 
 @auth_ns.route('/register', doc={'example': 'register'})
 class UserManagement(ResourceApp):
@@ -107,7 +104,6 @@ google = oauth.register(
     client_kwargs={'scope': 'email profile'},
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
 )
-
 
 
 @app.route('/google_auth')

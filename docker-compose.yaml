@@ -29,8 +29,8 @@ services:
       DATABASE_URL: postgresql://root:root@db:5432/books_management
       API_KEY: 'change-me'
       SECRET_KEY: 'bad-secret-key'
-      GOOGLE_CLIENT_ID: ''
-      GOOGLE_CLIENT_SECRET: ''
+    env_file:
+      - .env
   nginx:
     build: ./nginx
     container_name: nginx-flask
