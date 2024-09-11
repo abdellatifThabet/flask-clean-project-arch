@@ -11,6 +11,8 @@ ecosystem:
 * [flask-sqlalchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) to connect flask app with
 * [flask-migrate](https://flask-migrate.readthedocs.io/en/latest/) to auto-generate db migration file.
 * [marshmallow] (https://marshmallow.readthedocs.io/en/stable/) for inputs validators and serializers
+* [Authlib] (https://docs.authlib.org/en/v1.3.1/client/index.html) for google auth.
+* [Flask-JWT-Extended] (https://flask-jwt-extended.readthedocs.io/en/stable/) for jwt access and refresh tokens.
 
 ### Run the server
 
