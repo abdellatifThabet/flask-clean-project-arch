@@ -12,25 +12,35 @@ services:
       POSTGRES_MULTIPLE_EXTENSIONS: postgis,hstore,postgis_topology,postgis_raster,pgrouting,fuzzystrmatch
     # volumes:
     #   - db_volume:/var/lib/postgresql
+
   python-api:
     depends_on:
       - db
     build: .
     shm_size: 256m
-    # expose:
-    #   - 5000
     ports:
       - "5000:5000"
     volumes:
       - .:/app
       - api_data:/tmp/
     environment:
-      FLASK_ENV: development
+      FLASK_ENV: production
       DATABASE_URL: postgresql://root:root@db:5432/books_management
       API_KEY: 'change-me'
       SECRET_KEY: 'bad-secret-key'
     env_file:
       - .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 81
+    ports:
+      - "5050:81"
+
   nginx:
     build: ./nginx
     container_name: nginx-flask

@@ -5,6 +5,7 @@ import os
 from flask import render_template
 
 
+
 oauth = OAuth(app)
 google = oauth.register(
     name='google',

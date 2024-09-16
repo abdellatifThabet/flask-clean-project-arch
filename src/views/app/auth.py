@@ -11,9 +11,7 @@ from src.views import json_response
 ## as a hash function we'll be  using argon
 from argon2 import PasswordHasher
 ph = PasswordHasher()
-from functools import wraps
 import uuid
-from werkzeug.exceptions import NotFound, Forbidden
 
 from flask_app import app, db
 from flask import url_for, session, redirect

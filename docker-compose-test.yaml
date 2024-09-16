@@ -1,0 +1,27 @@
+version: "3.3"
+services:
+  db-test:
+    image: kartoza/postgis:13.0
+    restart: always
+    ports:
+      - "54325:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASS: root
+      POSTGRES_DB: books_management
+      POSTGRES_MULTIPLE_EXTENSIONS: postgis,hstore,postgis_topology,postgis_raster,pgrouting,fuzzystrmatch
+  api-test:
+    depends_on:
+      - db-test
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: development
+      DATABASE_URL: postgresql://root:root@db-test:5432/books_management?sslmode=disable
+      SECRET_KEY: 'bad-secret-key'
+      API_KEY: 'change-me'

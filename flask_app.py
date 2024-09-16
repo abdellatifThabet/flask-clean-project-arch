@@ -8,17 +8,17 @@ from src.db_models import User
 
 
 def create_app():
-    _app = Flask(__name__)
-    CORS(_app)
-    _app.config.from_object(config)
+    app = Flask(__name__)
+    CORS(app)
+    app.config.from_object(config)
 
-    db_model.init_app(_app)
-    jwt.init_app(_app)
-    migrate = Migrate(_app, db_model)
+    db_model.init_app(app)
+    jwt.init_app(app)
+    migrate = Migrate(app, db_model)
     
     # the blueprint import should be here after flask app initialization
     from src.views.blueprint import blueprint_v1
-    _app.register_blueprint(blueprint_v1)
+    app.register_blueprint(blueprint_v1)
 
     # load user
     @jwt.user_lookup_loader 
@@ -42,6 +42,6 @@ def create_app():
         return jsonify({"message": "request does not contain a valid token",
                         "error": "auth header"}), 401
         
-    return _app, db_model
+    return app, db_model
 
 app, db  = create_app()
